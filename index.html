@@ -1,99 +1,97 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Extremely Bad Lighthouse Score Example</title>
-    <!-- No viewport meta tag -->
-    <!-- No character set -->
-    <!-- No language attribute -->
+    <meta charset="UTF-8">
+    <!-- Missing viewport meta tag -->
+    <title>Medium-Bad Lighthouse Score Example</title>
     <style>
-        /* Poor contrast ratio */
+        /* Suboptimal contrast ratio */
         body {
-            background-color: #777;
+            font-family: Arial, sans-serif;
+            background-color: #e0e0e0;
             color: #999;
-            font-size: 10px;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
         }
-        /* Tiny tap targets */
+
+        /* Small tap targets */
         a {
-            padding: 2px;
-            margin: 0;
-            display: inline-block;
+            padding: 4px;
+            margin: 2px;
+            font-size: 11px;
         }
-        /* Force horizontal scrolling */
-        .wide-content {
-            width: 2000px;
-            height: 500px;
-            background: url('https://via.placeholder.com/2000x500');
+
+        /* Non-responsive design */
+        .container {
+            width: 960px;
+        }
+
+        h1 {
+            color: #939393;  /* Poor contrast with background */
         }
     </style>
+    <!-- Render-blocking CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-<!-- Missing heading structure -->
-<img src="https://via.placeholder.com/800x600" alt="">
-<img src="https://via.placeholder.com/800x600">
+<div class="container">
+    <!-- Poor heading structure (missing h1) -->
+    <h3>Welcome to my page</h3>
 
-<div class="wide-content"></div>
+    <!-- Image without proper dimensions -->
+    <img src="https://via.placeholder.com/1200x800" alt="Placeholder image">
 
-<!-- Links with no discernible names -->
-<a href="#">click</a>
-<a href="#"><img src="https://via.placeholder.com/30x30"></a>
+    <p>This is a simple page that will be scanned with Lighthouse.</p>
 
-<!-- Poor accessibility -->
-<div onclick="alert('clicked')" style="color: #aaa; background: #999; padding: 5px;">Click me</div>
+    <!-- Non-descriptive link text -->
+    <p>Click <a href="#">here</a> to learn more.</p>
 
-<!-- Render-blocking resources -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <p>Last updated: <span id="date"></span></p>
 
-<!-- Inefficient JavaScript -->
-<script>
-    // Create memory leaks
-    let leakyArray = [];
-    function createLeak() {
-        let largeObj = new Array(1000000).fill('memory leak');
-        leakyArray.push(largeObj);
-        setTimeout(createLeak, 100);
-    }
-    createLeak();
+    <!-- Missing some alt attributes -->
+    <div>
+        <img src="https://via.placeholder.com/300x200" alt="">
+        <img src="https://via.placeholder.com/300x200">
+    </div>
 
-    // CPU-intensive loop
-    for(let i=0; i<10000; i++) {
-        document.body.appendChild(document.createElement('span'));
-    }
-
-    // Force layout thrashing
-    for(let i=0; i<100; i++) {
-        document.body.offsetHeight;
-        document.body.style.margin = i + "px";
-    }
-
-    // Load large scripts
-    function loadHeavyScripts() {
-        for(let i=0; i<10; i++) {
-            let script = document.createElement('script');
-            script.src = `https://cdn.jsdelivr.net/npm/lodash@\${i}/lodash.min.js`;
-            document.body.appendChild(script);
-        }
-    }
-    loadHeavyScripts();
-</script>
-
-<!-- Huge unoptimized images -->
-<div>
-    <img src="https://via.placeholder.com/3000x2000" width="300" height="200">
-    <img src="https://via.placeholder.com/4000x3000" width="400" height="300">
+    <!-- Form elements without labels -->
+    <form>
+        <input type="text" placeholder="Enter your name">
+        <input type="email" placeholder="Enter your email">
+        <button type="submit">Submit</button>
+    </form>
 </div>
 
-<!-- No text compression -->
-<!-- Unminified HTML -->
-<!-- Many inline scripts -->
-<script>document.write('<p>Document write used</p>');</script>
+<!-- Render-blocking JavaScript -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-<!-- Poor SEO -->
-<meta name="robots" content="noindex, nofollow">
+<!-- Unminified JavaScript -->
+<script>
+    // Set the date
+    document.getElementById('date').textContent = new Date().toLocaleDateString();
 
-<!-- Insecure elements -->
-<form action="http://insecure-example.com/form" method="post">
-    <input type="text">
-    <input type="submit">
-</form>
+    // Some inefficient JavaScript
+    function inefficientFunction() {
+        let result = 0;
+        for (let i = 0; i < 1000; i++) {
+            result += Math.random();
+            // Force layout recalculation
+            document.body.offsetHeight;
+        }
+        return result;
+    }
+
+    inefficientFunction();
+
+    // Create some DOM elements
+    for (let i = 0; i < 50; i++) {
+        const div = document.createElement('div');
+        div.textContent = 'Unnecessary element ' + i;
+        document.body.appendChild(div);
+    }
+</script>
 </body>
 </html>
