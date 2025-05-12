@@ -1,29 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My GitHub Pages Site</title>
+    <title>Extremely Bad Lighthouse Score Example</title>
+    <!-- No viewport meta tag -->
+    <!-- No character set -->
+    <!-- No language attribute -->
     <style>
+        /* Poor contrast ratio */
         body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
+            background-color: #777;
+            color: #999;
+            font-size: 10px;
         }
-        h1 {
-            color: #333;
+        /* Tiny tap targets */
+        a {
+            padding: 2px;
+            margin: 0;
+            display: inline-block;
+        }
+        /* Force horizontal scrolling */
+        .wide-content {
+            width: 2000px;
+            height: 500px;
+            background: url('https://via.placeholder.com/2000x500');
         }
     </style>
 </head>
 <body>
+<!-- Missing heading structure -->
+<img src="https://via.placeholder.com/800x600" alt="">
+<img src="https://via.placeholder.com/800x600">
 
-<p>This is a simple page that will be scanned with Lighthouse.</p>
-<p>Last updated: <span id="date"></span></p>
+<div class="wide-content"></div>
 
+<!-- Links with no discernible names -->
+<a href="#">click</a>
+<a href="#"><img src="https://via.placeholder.com/30x30"></a>
+
+<!-- Poor accessibility -->
+<div onclick="alert('clicked')" style="color: #aaa; background: #999; padding: 5px;">Click me</div>
+
+<!-- Render-blocking resources -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Inefficient JavaScript -->
 <script>
-    document.getElementById('date').textContent = new Date().toLocaleDateString();
+    // Create memory leaks
+    let leakyArray = [];
+    function createLeak() {
+        let largeObj = new Array(1000000).fill('memory leak');
+        leakyArray.push(largeObj);
+        setTimeout(createLeak, 100);
+    }
+    createLeak();
+
+    // CPU-intensive loop
+    for(let i=0; i<10000; i++) {
+        document.body.appendChild(document.createElement('span'));
+    }
+
+    // Force layout thrashing
+    for(let i=0; i<100; i++) {
+        document.body.offsetHeight;
+        document.body.style.margin = i + "px";
+    }
+
+    // Load large scripts
+    function loadHeavyScripts() {
+        for(let i=0; i<10; i++) {
+            let script = document.createElement('script');
+            script.src = `https://cdn.jsdelivr.net/npm/lodash@\${i}/lodash.min.js`;
+            document.body.appendChild(script);
+        }
+    }
+    loadHeavyScripts();
 </script>
+
+<!-- Huge unoptimized images -->
+<div>
+    <img src="https://via.placeholder.com/3000x2000" width="300" height="200">
+    <img src="https://via.placeholder.com/4000x3000" width="400" height="300">
+</div>
+
+<!-- No text compression -->
+<!-- Unminified HTML -->
+<!-- Many inline scripts -->
+<script>document.write('<p>Document write used</p>');</script>
+
+<!-- Poor SEO -->
+<meta name="robots" content="noindex, nofollow">
+
+<!-- Insecure elements -->
+<form action="http://insecure-example.com/form" method="post">
+    <input type="text">
+    <input type="submit">
+</form>
 </body>
 </html>
